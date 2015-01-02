@@ -1,4 +1,4 @@
 moq
 ===
 
-The most popular and friendly mocking framework for .NET and Xamarin
+The most popular and friendly mocking library for .NET and Xamarin
