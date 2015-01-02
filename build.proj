@@ -34,7 +34,7 @@
 		<MSBuild Projects="$(MSBuildThisFileFullPath)" Properties="_CoreBuild=true" Targets="CoreBuild" />
 	</Target>
 
-	<Target Name="CoreBuild" DependsOnTargets="SemanticGit:GetVersion">
+	<Target Name="CoreBuild" DependsOnTargets="SemanticGit:GetVersion" Condition="'$(_CoreBuild)' == 'true'">
 		<MSBuild
 			Projects="@(SolutionFile)"
 			Properties="TrackFileAccess=$(TrackFileAccess);Configuration=$(Configuration)"/>
