@@ -26,19 +26,20 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<SolutionFile Include="src\Moq.Build.sln" />
+		<Solution Include="src\Moq.Build.sln">
+			<AdditionalProperties>TrackFileAccess=$(TrackFileAccess);Configuration=$(Configuration)</AdditionalProperties>
+		</Solution>
 	</ItemGroup>
 	
-	<Target Name="Build" DependsOnTargets="RestorePackages">
-		<!-- We call ourselves after we restore, so that we can successfully import the SemanticGit targets -->
+	<Import Project="nuget.targets" />
+
+	<Target Name="Build">
+		<!-- We call ourselves after we restore (RestorePackages runs before Build), so that we can successfully import the SemanticGit targets -->
 		<MSBuild Projects="$(MSBuildThisFileFullPath)" Properties="_CoreBuild=true" Targets="CoreBuild" />
 	</Target>
 
 	<Target Name="CoreBuild" DependsOnTargets="SemanticGit:GetVersion" Condition="'$(_CoreBuild)' == 'true'">
-		<MSBuild
-			Projects="@(SolutionFile)"
-			Properties="TrackFileAccess=$(TrackFileAccess);Configuration=$(Configuration)"/>
-		
+		<MSBuild Projects="@(Solution)" />
 		<Message Importance="high" Text="Built version $(_Major).$(_Minor).$(_Patch) ($(_Commit))" />
 	</Target>
 
@@ -51,7 +52,7 @@
 
 	<Target Name="Clean">
 		<MSBuild
-			Projects="@(SolutionFile)"
+			Projects="@(Solution)"
 			Targets="Clean"
 			Properties="TrackFileAccess=$(TrackFileAccess);Configuration=$(Configuration)"/>
 
