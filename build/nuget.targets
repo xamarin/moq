@@ -7,7 +7,8 @@
 	</PropertyGroup>
 
 	<Target Name="RestorePackages" BeforeTargets="Build" DependsOnTargets="DownloadNuGet">
-		<Exec Command="&quot;$(NuGetExe)&quot; Restore &quot;$(SolutionPath)&quot;" />
+		<Exec Command="&quot;$(NuGetExe)&quot; Restore &quot;$(SolutionPath)&quot;" Condition="'$(SolutionPath)' != ''" />
+		<Exec Command="&quot;$(NuGetExe)&quot; Install packages.config -OutputDirectory packages -ExcludeVersion" Condition="Exists('packages.config')" />
 	</Target>
 
 	<PropertyGroup Condition="'$(OS)' == 'Windows_NT'">

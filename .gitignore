@@ -13,7 +13,6 @@
 [Rr]eleases/
 x64/
 x86/
-build/
 bld/
 [Bb]in/
 [Oo]bj/
@@ -133,7 +132,7 @@ publish/
 # NuGet
 *.nupkg
 **/packages/*
-.nuget/
+**/.nuget/
 
 # Windows Azure Build Output
 csx/
